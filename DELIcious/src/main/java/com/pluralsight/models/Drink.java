@@ -1,15 +1,14 @@
 package com.pluralsight.models;
 
+import com.pluralsight.util.ItemSize;
+
 public class Drink {
-    public enum drinkSize {
-        SMALL, MEDIUM, LARGE
-    }
 
     private String name;
-    private drinkSize size;
+    private ItemSize size;
     private double price;
 
-    public Drink(String name, drinkSize size) {
+    public Drink(String name, ItemSize size) {
         this.name = name;
         this.size = size;
         this.price = generatePrice();
@@ -17,7 +16,7 @@ public class Drink {
 
     //sets the price of drink based on its size
     public double generatePrice() {
-        switch(size) {
+        switch(this.size) {
             case SMALL:
                 return 2.00;
             case MEDIUM:
@@ -37,11 +36,11 @@ public class Drink {
         this.name = name;
     }
 
-    public drinkSize getSize() {
+    public ItemSize getSize() {
         return size;
     }
 
-    public void setSize(drinkSize size) {
+    public void setSize(ItemSize size) {
         this.size = size;
     }
 
