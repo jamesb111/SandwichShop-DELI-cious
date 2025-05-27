@@ -1,9 +1,12 @@
 package com.pluralsight.models;
 
 import com.pluralsight.util.ItemSize;
-import com.pluralsight.util.MenuArrays;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static com.pluralsight.util.MenuArrays.*;
 
 
@@ -24,6 +27,7 @@ public class Sandwich {
         this.totalPrice = calculateTotalPrice();
         this.sizeInches = sizeToInches();
     }
+
 
     // will conditionally set size from small, medium, or large to a number of inches
     public int sizeToInches() {
@@ -109,5 +113,57 @@ public class Sandwich {
 
     public int getSizeInches() {
         return sizeInches;
+    }
+
+    public  void getSandwichDetails() {
+        // topping boolean idea
+//        boolean hasMeat = toppingList.stream()
+//                .anyMatch(topping -> isItemInMenu(topping.getName(), menuMeats));
+
+        // lambdas that adds items to list if they match-----------------------
+        List<Topping> meatToppings = toppingList.stream()
+                .filter(topping -> Arrays.stream(menuMeats)
+                        .anyMatch(val -> val.equalsIgnoreCase(topping.getName())))
+                .toList();
+
+        List<Topping> cheeseToppings = toppingList.stream()
+                .filter(topping -> Arrays.stream(menuCheeses)
+                        .anyMatch(val -> val.equalsIgnoreCase(topping.getName())))
+                .toList();
+
+        List<Topping> regToppings = toppingList.stream()
+                .filter(topping -> Arrays.stream(menuRegToppings)
+                        .anyMatch(val -> val.equalsIgnoreCase(topping.getName())))
+                .toList();
+
+        //prints bread
+        if(this.isToasted) {
+            System.out.printf("Bread type: Toasted %s | Price: $%.2f \n", this.getBread(), this.getBreadCost());
+        } else {
+            System.out.printf("Bread type: %s | Price: $%.2f \n", this.getBread(), this.getBreadCost());
+        }
+
+
+        // conditionally will print topping details based on the size of the sandwich
+        switch(this.size) {
+            case SMALL:
+                meatToppings.forEach(topping -> System.out.println("Meat: " + topping.getName() + " Price: $1.00"));
+                cheeseToppings.forEach(topping -> System.out.println("Cheese: " + topping.getName() + " Price: $0.75"));
+                regToppings.forEach(topping -> System.out.println("Name: " + topping.getName() + " Price: FREE"));
+                break;
+            case MEDIUM:
+                meatToppings.forEach(topping -> System.out.println("Meat: " + topping.getName() + " Price: $2.00"));
+                cheeseToppings.forEach(topping -> System.out.println("Cheese: " + topping.getName() + " Price: $1.50"));
+                regToppings.forEach(topping -> System.out.println("Name: " + topping.getName() + " Price: FREE"));
+                break;
+            case LARGE:
+                meatToppings.forEach(topping -> System.out.println("Meat: " + topping.getName() + " Price: $3.00"));
+                cheeseToppings.forEach(topping -> System.out.println("Cheese: " + topping.getName() + " Price: $2.25"));
+                regToppings.forEach(topping -> System.out.println("Name: " + topping.getName() + " Price: FREE"));
+                break;
+        }
+
+        System.out.println("Sandwich costs $" + calculateTotalPrice());
+
     }
 }
