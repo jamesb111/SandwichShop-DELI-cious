@@ -30,38 +30,67 @@ public class ReceiptWriter {
             writer.write("ITEMS & PRICES");
             writer.newLine();
 
-            //writes sandwiches
-            for(Sandwich s : order.getSandwiches()) {
-                String sammyLine;
-                if(s.isToasted()) {
-                    sammyLine = "Toasted " + s.getBread() + " | $" + String.format("%.2f", s.getBreadCost());
-                } else {
-                    sammyLine =  s.getBread() + " | $" + String.format("%.2f", s.getBreadCost());
-                }
-                writer.write(sammyLine);
-                writer.newLine();
+            int counter = 0;
 
-                //writes toppings
-                for(Topping t : s.getToppingList()) {
-                    String toppingLine = t.getName() + " | $" + String.format("%.2f", s.getToppingPrice(t));
-                    writer.write(toppingLine);
+            //writes sandwiches
+            if(order.getSandwiches() != null) {
+                for(Sandwich s : order.getSandwiches()) {
+                    // numbered header for sandwich
+                    counter++;
+                    writer.write("Sandwich #" + counter + " ---------------");
+                    writer.newLine();
+
+                    String sammyLine;
+                    if(s.isToasted()) {
+                        sammyLine = "Toasted " + s.getBread() + " | $" + String.format("%.2f", s.getBreadCost());
+                    } else {
+                        sammyLine =  s.getBread() + " | $" + String.format("%.2f", s.getBreadCost());
+                    }
+                    writer.write(sammyLine);
+                    writer.newLine();
+
+                    //writes toppings
+                    for(Topping t : s.getToppingList()) {
+                        String toppingLine = t.getName() + " | $" + String.format("%.2f", s.getToppingPrice(t));
+                        writer.write(toppingLine);
+                        writer.newLine();
+                    }
+
                     writer.newLine();
                 }
+            } else {
+                writer.write("NO SANDWICHES");
+                writer.newLine();
             }
 
+
+            writer.write("DRINKS & CHIPS ---------------");
+            writer.newLine();
+
             //writes drinks
-            for(Drink d : order.getDrinks()) {
-                String drinkLine = d.getName() + " | $" + String.format("%.2f", d.getPrice());
-                writer.write(drinkLine);
+            if(order.getDrinks() != null) {
+                for(Drink d : order.getDrinks()) {
+                    String drinkLine = d.getName() + " | $" + String.format("%.2f", d.getPrice());
+                    writer.write(drinkLine);
+                    writer.newLine();
+                }
+            } else {
+                writer.write("NO DRINKS");
                 writer.newLine();
             }
 
             //writes drinks
-            for(Chips c : order.getChipsList()) {
-                String chipLine = c.getName() + " | $" + String.format("%.2f", c.getPrice());
-                writer.write(chipLine);
+            if(order.getChipsList() != null) {
+                for(Chips c : order.getChipsList()) {
+                    String chipLine = c.getName() + " | $" + String.format("%.2f", c.getPrice());
+                    writer.write(chipLine);
+                    writer.newLine();
+                }
+            } else {
+                writer.write("NO CHIPS");
                 writer.newLine();
             }
+
 
             writer.write("──────────────────────────────────────────────────────────────");
             writer.newLine();

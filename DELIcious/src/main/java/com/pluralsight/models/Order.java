@@ -20,18 +20,28 @@ public class Order {
     }
 
     public double getOrderTotal() {
+        double sandwichSum = 0;
+        double drinkSum = 0;
+        double chipsSum = 0;
+
         //adds up all sandwiches
-        double sandwichSum = sandwiches.stream()
-                .mapToDouble(Sandwich::calculateTotalPrice)
-                .sum();
+        if(this.sandwiches != null) {
+                    sandwichSum = sandwiches.stream()
+                    .mapToDouble(Sandwich::calculateTotalPrice)
+                    .sum();
+        }
         //adds up all drinks
-        double drinkSum = drinks.stream()
-                .mapToDouble(Drink::getPrice)
-                .sum();
+        if(this.drinks != null) {
+                    drinkSum = drinks.stream()
+                    .mapToDouble(Drink::getPrice)
+                    .sum();
+        }
         //adds up all chips
-        double chipsSum = chipsList.stream()
-                .mapToDouble(Chips::getPrice)
-                .sum();
+        if(this.chipsList != null) {
+                    chipsSum = chipsList.stream()
+                    .mapToDouble(Chips::getPrice)
+                    .sum();
+        }
 
         return sandwichSum + drinkSum + chipsSum;
     }
@@ -44,15 +54,24 @@ public class Order {
         System.out.println();
 
         //gets all sandwich details
-        for(Sandwich s : sandwiches) {
-            s.getSandwichDetails();
+        int counter = 0;
+        if(this.sandwiches != null) {
+            for(Sandwich s : sandwiches) {
+                counter++;
+                System.out.println("Sandwich #" + counter + " ----------------------");
+                s.getSandwichDetails();
+            }
         }
 
         //gets all chips details
-        chipsList.forEach(chip -> System.out.printf("Chips: %s | Price: $%.2f \n", chip.getName(), chip.getPrice()));
+        if(this.chipsList != null) {
+            chipsList.forEach(chip -> System.out.printf("Chips: %s | Price: $%.2f \n", chip.getName(), chip.getPrice()));
+        }
 
         //gets all drink details
-        drinks.forEach(drink -> System.out.printf ("Drink: %s %s | Price: $%.2f \n", drink.getSize(), drink.getName(), drink.generatePrice()));
+        if(this.drinks != null) {
+            drinks.forEach(drink -> System.out.printf ("Drink: %s %s | Price: $%.2f \n", drink.getSize(), drink.getName(), drink.generatePrice()));
+        }
 
         System.out.println("──────────────────────────────────────────────────────────────");
         System.out.printf("ORDER TOTAL: $%.2f \n",  getOrderTotal());

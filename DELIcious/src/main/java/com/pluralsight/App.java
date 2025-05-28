@@ -9,6 +9,8 @@ import java.util.ArrayList;
 public class App {
     public static void main(String[] args) {
 
+
+
         ArrayList<Topping> topList = new ArrayList<>();
         topList.add(new Topping("steak"));
         topList.add(new Topping("swiss"));
@@ -37,7 +39,7 @@ public class App {
         drinkz.add(new Drink("Pepsi", ItemSize.MEDIUM));
 
 
-        Order newOrder = new Order(sammys, drinkz, newChips);
+        Order newOrder = new Order(null, drinkz, newChips);
         newOrder.getOrderDetails();
 
         ReceiptWriter rWriter = new ReceiptWriter();

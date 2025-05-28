@@ -105,7 +105,7 @@ public class Sandwich {
                         .anyMatch(val -> val.equalsIgnoreCase(topping.getName())))
                 .toList();
 
-        System.out.println("Sandwich details ----------------------");
+//        System.out.println("Sandwich details ----------------------");
         //prints bread
         if(this.isToasted) {
             System.out.printf("Bread type: Toasted %s | Price: $%.2f \n", this.getBread(), this.getBreadCost());
