@@ -51,48 +51,12 @@ public class Sandwich {
 
     public double calculateTotalPrice() {
         //check for lambdas
-        double meatCost = 0;
-        double cheeseCost = 0;
+        double topCost = 0;
         for(Topping t : toppingList) {
-            //checks if toppings are meet or cheese (these are the only toppings that have a cost)
-            boolean containsMeat = isItemInMenu(t.getName(), menuMeats);
-            boolean containsCheese = isItemInMenu(t.getName(), menuCheeses);
-
-            switch(this.size) {
-                case SMALL:
-                    if(containsMeat) {
-                        meatCost += 1.00;
-                        if(containsCheese) {
-                            cheeseCost += 0.75;
-                        }
-                    } else if(containsCheese) {
-                        cheeseCost += 0.75;
-                    }
-                    break;
-                case MEDIUM:
-                    if(containsMeat) {
-                        meatCost += 2.00;
-                        if(containsCheese) {
-                            cheeseCost += 1.50;
-                        }
-                    } else if(containsCheese) {
-                        cheeseCost += 1.50;
-                    }
-                    break;
-                case LARGE:
-                    if(containsMeat) {
-                        meatCost += 3.00;
-                        if(containsCheese) {
-                            cheeseCost += 2.25;
-                        }
-                    } else if(containsCheese) {
-                        cheeseCost += 2.25;
-                    }
-                    break;
-            }
+            topCost += getToppingPrice(t);
         }
 
-        return meatCost + cheeseCost + getBreadCost();
+        return topCost + getBreadCost();
     }
 
     public String getBread() {
@@ -115,7 +79,7 @@ public class Sandwich {
         return sizeInches;
     }
 
-    public  void getSandwichDetails() {
+    public void getSandwichDetails() {
         // topping boolean idea
 //        boolean hasMeat = toppingList.stream()
 //                .anyMatch(topping -> isItemInMenu(topping.getName(), menuMeats));
@@ -136,6 +100,12 @@ public class Sandwich {
                         .anyMatch(val -> val.equalsIgnoreCase(topping.getName())))
                 .toList();
 
+        List<Topping> sauceOnTop = toppingList.stream()
+                .filter(topping -> Arrays.stream(menuSauces)
+                        .anyMatch(val -> val.equalsIgnoreCase(topping.getName())))
+                .toList();
+
+        System.out.println("Sandwich details ----------------------");
         //prints bread
         if(this.isToasted) {
             System.out.printf("Bread type: Toasted %s | Price: $%.2f \n", this.getBread(), this.getBreadCost());
@@ -143,27 +113,54 @@ public class Sandwich {
             System.out.printf("Bread type: %s | Price: $%.2f \n", this.getBread(), this.getBreadCost());
         }
 
+        //prints out toppings
+        meatToppings.forEach(topping -> System.out.printf("Meat: %s | Price: $%.2f \n", topping.getName(), getToppingPrice(topping)));
+        cheeseToppings.forEach(topping -> System.out.printf("Cheese: %s | Price: $%.2f \n",  topping.getName(), getToppingPrice(topping)));
+        regToppings.forEach(topping -> System.out.printf("Name: %s | Price: FREE \n", topping.getName()));
+        sauceOnTop.forEach(topping -> System.out.printf("Name: %s | Price: FREE \n", topping.getName()));
 
-        // conditionally will print topping details based on the size of the sandwich
-        switch(this.size) {
-            case SMALL:
-                meatToppings.forEach(topping -> System.out.println("Meat: " + topping.getName() + " Price: $1.00"));
-                cheeseToppings.forEach(topping -> System.out.println("Cheese: " + topping.getName() + " Price: $0.75"));
-                regToppings.forEach(topping -> System.out.println("Name: " + topping.getName() + " Price: FREE"));
-                break;
-            case MEDIUM:
-                meatToppings.forEach(topping -> System.out.println("Meat: " + topping.getName() + " Price: $2.00"));
-                cheeseToppings.forEach(topping -> System.out.println("Cheese: " + topping.getName() + " Price: $1.50"));
-                regToppings.forEach(topping -> System.out.println("Name: " + topping.getName() + " Price: FREE"));
-                break;
-            case LARGE:
-                meatToppings.forEach(topping -> System.out.println("Meat: " + topping.getName() + " Price: $3.00"));
-                cheeseToppings.forEach(topping -> System.out.println("Cheese: " + topping.getName() + " Price: $2.25"));
-                regToppings.forEach(topping -> System.out.println("Name: " + topping.getName() + " Price: FREE"));
-                break;
+        System.out.printf("%d inch sandwich on %s bread costs $%.2f \n", this.getSizeInches(), this.getBread(), this.calculateTotalPrice());
+        System.out.println();
+
+    }
+
+    // return prices of toppings based on size of sandwich
+    public double getToppingPrice(Topping topping) {
+        //booleans that'll check the menu arrays and set price based on matches
+
+        boolean containsMeat = isItemInMenu(topping.getName(), menuMeats);
+        boolean containsCheese = isItemInMenu(topping.getName(), menuCheeses);
+        boolean containsRegToppings = isItemInMenu(topping.getName(), menuRegToppings);
+        boolean containsSauces = isItemInMenu(topping.getName(), menuSauces);
+
+        // non premium toppings are free
+        if (containsRegToppings || containsSauces) {
+            return 0;
         }
 
-        System.out.println("Sandwich costs $" + calculateTotalPrice());
+        switch (this.size) {
+            case SMALL:
+                if (containsMeat) {
+                    return 1.00;
+                } else if (containsCheese) {
+                    return 0.75;
+                }
+            case MEDIUM:
+                if (containsMeat) {
+                    return 2.00;
+                } else if (containsCheese) {
+                    return 1.50;
+                }
+            case LARGE:
+                if (containsMeat) {
+                    return 3.00;
+                } else if (containsCheese) {
+                    return 2.25;
+                }
+
+            default:
+                return 0;
+        }
 
     }
 }

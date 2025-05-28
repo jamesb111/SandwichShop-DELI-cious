@@ -1,4 +1,78 @@
 package com.pluralsight.util;
 
+import com.pluralsight.models.*;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+
 public class ReceiptWriter {
+    //saves order receipt to a txt file
+    public  void saveReceipt(Order order) {
+        //gets current date and time.
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter format1 = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
+
+        String nowFormatted = now.format(format1);
+
+        try {
+            //use to write to file
+            BufferedWriter writer = new BufferedWriter( new FileWriter("src/main/resources/" + nowFormatted+ ".txt"));
+
+            //wrties header
+            writer.write("ORDER RECEIPT-------------------------------------------------");
+            writer.newLine();
+            writer.write("──────────────────────────────────────────────────────────────");
+            writer.newLine();
+            writer.write("ITEMS & PRICES");
+            writer.newLine();
+
+            //writes sandwiches
+            for(Sandwich s : order.getSandwiches()) {
+                String sammyLine;
+                if(s.isToasted()) {
+                    sammyLine = "Toasted " + s.getBread() + " | $" + String.format("%.2f", s.getBreadCost());
+                } else {
+                    sammyLine =  s.getBread() + " | $" + String.format("%.2f", s.getBreadCost());
+                }
+                writer.write(sammyLine);
+                writer.newLine();
+
+                //writes toppings
+                for(Topping t : s.getToppingList()) {
+                    String toppingLine = t.getName() + " | $" + String.format("%.2f", s.getToppingPrice(t));
+                    writer.write(toppingLine);
+                    writer.newLine();
+                }
+            }
+
+            //writes drinks
+            for(Drink d : order.getDrinks()) {
+                String drinkLine = d.getName() + " | $" + String.format("%.2f", d.getPrice());
+                writer.write(drinkLine);
+                writer.newLine();
+            }
+
+            //writes drinks
+            for(Chips c : order.getChipsList()) {
+                String chipLine = c.getName() + " | $" + String.format("%.2f", c.getPrice());
+                writer.write(chipLine);
+                writer.newLine();
+            }
+
+            writer.write("──────────────────────────────────────────────────────────────");
+            writer.newLine();
+            writer.write("ORDER TOTAL: $" + String.format("%.2f", order.getOrderTotal()));
+            writer.newLine();
+            writer.write("──────────────────────────────────────────────────────────────");
+            writer.newLine();
+
+            writer.close();
+        }  catch (IOException e) {
+            System.out.println("Error writing receipt file: " + e.getMessage());
+        }
+    }
 }

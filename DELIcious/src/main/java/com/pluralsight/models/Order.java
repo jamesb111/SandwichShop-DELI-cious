@@ -37,18 +37,26 @@ public class Order {
     }
 
     public void getOrderDetails() {
+        System.out.println("──────────────────────────────────────────────────────────────");
+        System.out.println("                        ORDER RECEIPT                           ");
+        System.out.println("──────────────────────────────────────────────────────────────");
+        System.out.println("ITEM | PRICE:");
+        System.out.println();
+
         //gets all sandwich details
         for(Sandwich s : sandwiches) {
             s.getSandwichDetails();
         }
 
         //gets all chips details
-        chipsList.forEach(chip -> System.out.printf("Chips: %s Price: $%.2f \n", chip.getName(), chip.getPrice()));
+        chipsList.forEach(chip -> System.out.printf("Chips: %s | Price: $%.2f \n", chip.getName(), chip.getPrice()));
 
         //gets all drink details
-        drinks.forEach(drink -> System.out.printf ("Drink: %s %s Price: $%.2f \n", drink.getSize(), drink.getName(), drink.generatePrice()));
+        drinks.forEach(drink -> System.out.printf ("Drink: %s %s | Price: $%.2f \n", drink.getSize(), drink.getName(), drink.generatePrice()));
 
-        System.out.printf("Order total is: $%.2f \n",  getOrderTotal());
+        System.out.println("──────────────────────────────────────────────────────────────");
+        System.out.printf("ORDER TOTAL: $%.2f \n",  getOrderTotal());
+        System.out.println("──────────────────────────────────────────────────────────────");
     }
 
     // add methods that'll put items in the specified lists--------------

@@ -2,6 +2,7 @@ package com.pluralsight;
 
 import com.pluralsight.models.*;
 import com.pluralsight.util.ItemSize;
+import com.pluralsight.util.ReceiptWriter;
 
 import java.util.ArrayList;
 
@@ -39,8 +40,8 @@ public class App {
         Order newOrder = new Order(sammys, drinkz, newChips);
         newOrder.getOrderDetails();
 
-
-
+        ReceiptWriter rWriter = new ReceiptWriter();
+        rWriter.saveReceipt(newOrder);
 
     }
 }
