@@ -138,24 +138,50 @@ public class Sandwich {
             return 0;
         }
 
+        // sets topping amount based on topping type and sandwich size
         switch (this.size) {
             case SMALL:
-                if (containsMeat) {
-                    return 1.00;
-                } else if (containsCheese) {
-                    return 0.75;
-                }
+                // checks if topping is na extra based on boolean value
+               if(topping.isExtraTopping()) {
+                   if (containsMeat) {
+                       return 0.50;
+                   } else if (containsCheese) {
+                       return 0.30;
+                   }
+               } else {
+                   if (containsMeat) {
+                       return 1.00;
+                   } else if (containsCheese) {
+                       return 0.75;
+                   }
+               }
             case MEDIUM:
-                if (containsMeat) {
-                    return 2.00;
-                } else if (containsCheese) {
-                    return 1.50;
+                if(topping.isExtraTopping()) {
+                    if (containsMeat) {
+                        return 1.00;
+                    } else if (containsCheese) {
+                        return 0.60;
+                    }
+                } else {
+                    if (containsMeat) {
+                        return 2.00;
+                    } else if (containsCheese) {
+                        return 1.50;
+                    }
                 }
             case LARGE:
-                if (containsMeat) {
-                    return 3.00;
-                } else if (containsCheese) {
-                    return 2.25;
+                if(topping.isExtraTopping()) {
+                    if (containsMeat) {
+                        return 1.50;
+                    } else if (containsCheese) {
+                        return 0.90;
+                    }
+                } else {
+                    if (containsMeat) {
+                        return 3.00;
+                    } else if (containsCheese) {
+                        return 2.25;
+                    }
                 }
 
             default:
