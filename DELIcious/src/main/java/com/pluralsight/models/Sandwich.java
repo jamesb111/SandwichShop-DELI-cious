@@ -87,7 +87,7 @@ public class Sandwich {
         // lambdas that adds items to list if they match-----------------------
         List<Topping> meatToppings = toppingList.stream()
                 .filter(topping -> Arrays.stream(menuMeats)
-                        .anyMatch(val -> val.equalsIgnoreCase(topping.getName())))
+                        .anyMatch(val -> val.equalsIgnoreCase (topping.getName())))
                 .toList();
 
         List<Topping> cheeseToppings = toppingList.stream()
@@ -105,6 +105,10 @@ public class Sandwich {
                         .anyMatch(val -> val.equalsIgnoreCase(topping.getName())))
                 .toList();
 
+        List<Topping> extraToppings = toppingList.stream()
+                .filter(topping -> topping.getName().equalsIgnoreCase("EXTRA"))
+                        .toList();
+
 //        System.out.println("Sandwich details ----------------------");
         //prints bread
         if(this.isToasted) {
@@ -118,6 +122,14 @@ public class Sandwich {
         cheeseToppings.forEach(topping -> System.out.printf("Cheese: %s | Price: $%.2f \n",  topping.getName(), getToppingPrice(topping)));
         regToppings.forEach(topping -> System.out.printf("Name: %s | Price: FREE \n", topping.getName()));
         sauceOnTop.forEach(topping -> System.out.printf("Name: %s | Price: FREE \n", topping.getName()));
+
+        //gets extra toppings
+        for(Topping t : toppingList) {
+            if(t.getName().contains("EXTRA")) {
+                System.out.printf("%s | $%.2f", t.getName(), getToppingPrice(t));
+                System.out.println();
+            }
+        }
 
         System.out.printf("%d inch sandwich on %s bread costs $%.2f \n", this.getSizeInches(), this.getBread(), this.calculateTotalPrice());
         System.out.println();

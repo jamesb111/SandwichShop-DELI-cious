@@ -26,7 +26,7 @@ public class UserInterface {
             System.out.println("Welcome to the best sandwich shop in town! Select a number from our options \n" +
                     "1) New Order \n" +
                     "0) Exit - exit the application");
-            System.out.println("───────────────────────────────────────────────────────────────────────────────────────────────");
+            System.out.println("─────────────────────────────────────────────────────────────────────────────────────────────");
             System.out.println();
             System.out.print("Enter option here: ");
 
@@ -52,19 +52,35 @@ public class UserInterface {
         //loops through methods that will build your order
         while(onOrderScreen) {
             System.out.println("────────────────────────────────────MENU PAGE─────────────────────────────────────────");
-            System.out.println("MEATS                                CHEESES                                   BREADS");
+            System.out.println("MEATS                                CHEESES                                   BREADS \n" +
+                               "-------------------------------------------------------------------------------------- \n" +
+                               "Steak                                American                                  White \n" +
+                               "Ham                                  Provolone                                 Wheat \n" +
+                               "Salami                               Cheddar                                   Rye \n" +
+                               "Roast Beef                           Swiss                                     Wrap \n" +
+                               "Chicken \n" +
+                               "Bacon");
+            System.out.println("────────────────────────────────────────────────────────────────────────────────────────");
+            System.out.println("SAUCES");
+            System.out.println("--------------------------------------------------------------------------------------");
+            System.out.println("Mayo  Mustard  Ketchup  Ranch  Thousand Island  Vinaigrette");
+            System.out.println("────────────────────────────────────────────────────────────────────────────────────────");
+            System.out.println();
+
             System.out.println("Click one of the number selections to start your order. \n" +
                     "1) Add Sandwich \n" +
                     "2) Add Drink \n" +
                     "3) Add Chips \n" +
                     "4) Checkout \n" +
                     "0) Cancel Order");
-            System.out.println("───────────────────────────────────────────────────────────────────────────────────────────────");
-            System.out.println();
+            System.out.println("────────────────────────────────────────────────────────────────────────────────────────");
             System.out.print("Enter option here: "); // user input
-
             int orderChoice = scan.nextInt();
             scan.nextLine();
+            System.out.println("────────────────────────────────────────────────────────────────────────────────────────");
+            System.out.println();
+
+
 
             switch(orderChoice) {
                 case 1: //adds sandwich
@@ -83,10 +99,14 @@ public class UserInterface {
                     //new receipt writer to write to txt file
                     ReceiptWriter reWriter = new ReceiptWriter();
                     reWriter.saveReceipt(newOrder);
+                    onOrderScreen = false;
 
                     break;
                 case 0:
                     onOrderScreen = false;
+                    break;
+                default:
+                    System.out.println("Invalid selection. Please enter a valid option (0-4).");
                     break;
             }
 
@@ -102,14 +122,18 @@ public class UserInterface {
         boolean isExtra = false; // determines if topping is an extra
 
 
-        System.out.println("SANDWICH VIEW--------------------------");
+        System.out.println("-----------------------------------------SANDWICH VIEW-----------------------------------------");
+        System.out.println("───────────────────────────────────────────────────────────────────────────────────────────────");
+
 
         //gets sandwich size
         System.out.println("What size Sandwich do you want? \n" +
                 "S) Small \n" +
                 "M) Medium \n" +
                 "L) Large ");
+        System.out.print("Enter option here: "); // user input
         String userSize = scan.nextLine();
+        System.out.println();
 
         if (userSize.equalsIgnoreCase("s")) {
             sammySize = ItemSize.SMALL;
@@ -126,7 +150,9 @@ public class UserInterface {
                 "B) WHEAT \n" +
                 "C) RYE \n" +
                 "D) WRAP");
+        System.out.print("Enter option here: "); // user input
         String breadChoice = scan.nextLine();
+        System.out.println();
 
         //sets bread to the specified type
         if (breadChoice.equalsIgnoreCase("a")) {
@@ -154,21 +180,25 @@ public class UserInterface {
 
         //topping menu loop
         while(onToppingMenu) {
-            System.out.println("TOPPING VIEW--------------------------");
-            System.out.println("PRICES BY SIZE Small/Medium/Large");
-            System.out.println("MEATS $1.00/$2.00/$3.00");
-            System.out.println("CHEESES $0.75/$1.50/$2.25");
+            System.out.println("-----------------------------------------TOPPING VIEW------------------------------------------");
+            System.out.println("───────────────────────────────────────────────────────────────────────────────────────────────");
+            System.out.println("PRICES BY SIZE Small | Medium | Large");
+            System.out.println("MEATS          $1.00 | $2.00 | $3.00");
+            System.out.println("CHEESES        $0.75 | $1.50 | $2.25");
             System.out.println("All other toppings are free and included with your order.");
             System.out.println("───────────────────────────────────────────────────────────────────────────────────────────────");
             System.out.println("MEATS:");
-            System.out.println("Steak  Ham  Salami  Roast Beef  Chicken  Bacon");
+            System.out.println("Steak | Ham | Salami | Roast Beef | Chicken | Bacon");
+            System.out.println();
             System.out.println("CHEESES:");
-            System.out.println("American  Provolone  Cheddar  Swiss");
+            System.out.println("American | Provolone | Cheddar | Swiss");
+            System.out.println();
             System.out.println("REGULAR TOPPINGS:");
-            System.out.println("Lettuce  Peppers  Onions  Tomatoes  Jalapeños \n" +
-                    "Cucumbers  Pickles  Guacamole  Mushrooms");
+            System.out.println("Lettuce | Peppers | Onions | Tomatoes | Jalapeños \n" +
+                    "Cucumbers | Pickles | Guacamole | Mushrooms");
+            System.out.println();
             System.out.println("SAUCES:");
-            System.out.println("Mayo  Mustard  Ketchup  Ranch  Thousand Island  Vinaigrette");
+            System.out.println("Mayo | Mustard | Ketchup | Ranch | Thousand Island | Vinaigrette");
             System.out.println("───────────────────────────────────────────────────────────────────────────────────────────────");
             System.out.println("Would you like to add a topping? Y/N");
             System.out.print("Enter option here: ");
@@ -182,9 +212,9 @@ public class UserInterface {
                 //checks if the user topping is inside any of the menu arrays
                 boolean isOnMenu = isItemInMenu(userTopping, menuMeats) || isItemInMenu(userTopping, menuCheeses) || isItemInMenu(userTopping, menuRegToppings) || isItemInMenu(userTopping, menuSauces);
                 if (isOnMenu) {
-                    topList.add(new Topping(userTopping));
+                    topList.add(new Topping(userTopping, false));
 
-                    System.out.println("Would you like extra? Y/N");
+                    System.out.println("Would you like extra " + userTopping +" ? Y/N");
                     System.out.print("Enter option: ");
                     String mayWantExtra = scan.nextLine();
 
@@ -195,11 +225,9 @@ public class UserInterface {
                             topList.add(new Topping("EXTRA " + userTopping, true));
 
                         } else { // adds extra free toppings
-                            topList.add(new Topping("EXTRA " + userTopping));
+                            topList.add(new Topping("EXTRA " + userTopping, true));
                         }
 
-                    } else { // just adds topping if y is not selected for extra
-                        topList.add(new Topping(userTopping));
                     }
                 }
 
@@ -223,7 +251,8 @@ public class UserInterface {
         ItemSize size;
 
         //gets drink choice as number
-        System.out.println("DRINKS VIEW--------------------------");
+        System.out.println("------------------------------------------DRINKS VIEW------------------------------------------");
+        System.out.println("───────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("What kind of drink would you like? \n" +
                 "1) Vitamin water\n" +
                 "2) Sweet tea\n" +
@@ -281,7 +310,8 @@ public class UserInterface {
         //variables to store chips
         int chipChoice;
         String chipWord;
-        System.out.println("CHIPS VIEW--------------------------");
+        System.out.println("-------------------------------------------CHIPS VIEW------------------------------------------");
+        System.out.println("───────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("What kind of chips would you like? \n" +
                 "1) Doritos\n" +
                 "2) Cheetos\n" +
