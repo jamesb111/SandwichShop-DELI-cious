@@ -22,7 +22,7 @@ public class ReceiptWriter {
             //use to write to file
             BufferedWriter writer = new BufferedWriter( new FileWriter("src/main/resources/" + nowFormatted+ ".txt"));
 
-            //wrties header
+            //writes header
             writer.write("ORDER RECEIPT-------------------------------------------------");
             writer.newLine();
             writer.write("──────────────────────────────────────────────────────────────");
@@ -100,6 +100,8 @@ public class ReceiptWriter {
             writer.newLine();
 
             writer.close();
+            System.out.println("Receipt written to: src/main/resources/" + nowFormatted + ".txt");
+
         }  catch (IOException e) {
             System.out.println("Error writing receipt file: " + e.getMessage());
         }

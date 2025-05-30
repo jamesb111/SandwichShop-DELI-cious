@@ -11,6 +11,7 @@ import static com.pluralsight.util.MenuArrays.*;
 
 public class UserInterface {
 
+
     static Scanner scan = new Scanner(System.in);
 
     //private constructor so no other instances of userinterface exist
@@ -42,9 +43,9 @@ public class UserInterface {
     }
 
     public static void orderScreen() {
-         ArrayList<Sandwich> sammyList = new ArrayList<>(); // stores sandwiches
-         ArrayList<Drink> drinkList = new ArrayList<>(); // stores drinks
-         ArrayList<Chips> chipList = new ArrayList<>(); // stores chips
+        ArrayList<Sandwich> sammyList = new ArrayList<>(); // stores sandwiches
+        ArrayList<Drink> drinkList = new ArrayList<>(); // stores drinks
+        ArrayList<Chips> chipList = new ArrayList<>(); // stores chips
 
         //boolean for while loop
         boolean onOrderScreen = true;
@@ -96,10 +97,21 @@ public class UserInterface {
                     Order newOrder = new Order(sammyList, drinkList, chipList);
                     newOrder.getOrderDetails();
 
-                    //new receipt writer to write to txt file
-                    ReceiptWriter reWriter = new ReceiptWriter();
-                    reWriter.saveReceipt(newOrder);
-                    onOrderScreen = false;
+                    System.out.println("--------------------------------");
+                    System.out.println("A) CHECKOUT");
+                    System.out.println("B) CANCEL");
+                    String userChoice = scan.nextLine();
+
+                    if(userChoice.equalsIgnoreCase("a")) {
+                        //new receipt writer to write to txt file
+                        ReceiptWriter reWriter = new ReceiptWriter();
+                        reWriter.saveReceipt(newOrder);
+                        System.out.println("Order has been placed");
+                        onOrderScreen = false;
+                    } else {
+                        System.out.println("Order discarded");
+                        onOrderScreen = false;
+                    }
 
                     break;
                 case 0:
@@ -348,4 +360,5 @@ public class UserInterface {
 //        Chips newChips = new Chips(chipWord);
 //        chipList.add(newChips);
     }
+
 }
