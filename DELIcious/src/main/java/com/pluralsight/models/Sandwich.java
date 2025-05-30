@@ -105,10 +105,6 @@ public class Sandwich {
                         .anyMatch(val -> val.equalsIgnoreCase(topping.getName())))
                 .toList();
 
-        List<Topping> extraToppings = toppingList.stream()
-                .filter(topping -> topping.getName().equalsIgnoreCase("EXTRA"))
-                        .toList();
-
 //        System.out.println("Sandwich details ----------------------");
         //prints bread
         if(this.isToasted) {
